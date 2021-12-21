@@ -1,5 +1,6 @@
-import { Stack, useTheme } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
+import { useTheme } from "@mui/material";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 
 function TypeWriter() {

@@ -1,8 +1,8 @@
-import Box from "@material-ui/core/Box";
-import Container from "@material-ui/core/Container";
-import Divider from "@material-ui/core/Divider";
-import Stack from "@material-ui/core/Stack";
-import Typography from "@material-ui/core/Typography";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Divider from "@mui/material/Divider";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import React, { ReactElement } from "react";
 
 interface Props {}

@@ -1,5 +1,5 @@
-import { createTheme } from '@material-ui/core/styles';
-import defaultTheme from './default';
+import { createTheme } from "@mui/material/styles";
+import defaultTheme from "./default";
 //import typography from './typography';
 
 // const overrides = {
