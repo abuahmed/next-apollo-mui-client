@@ -1,6 +1,7 @@
 import {
   AppBar,
   Divider,
+  IconButton,
   List,
   ListItem,
   SwipeableDrawer,
@@ -11,22 +12,22 @@ import {
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 
-import Stack from "@mui/material/Stack";
 import React, { useState } from "react";
-import Link from "../Link";
+import Link from "./Link";
 
 import Logo from "./Logo";
 import { GradientBackground, ShadowStyled } from "../styles/layoutStyled";
 import { StyledButton } from "../styles/componentStyled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faAddressBook,
   faAddressCard,
+  faCartArrowDown,
   faHome,
   faPlay,
   faUsersCog,
 } from "@fortawesome/free-solid-svg-icons";
 import MenuIcon from "@mui/icons-material/Menu";
+import NavbarContent from "./header/NavbarContent";
 
 const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
@@ -42,66 +43,29 @@ const Navbar = () => {
       <AppBar>
         <GradientBackground>
           <ShadowStyled>
-            <Container maxWidth="lg" sx={{ color: "text.primary" }}>
-              <Toolbar sx={{ height: 64, display: "flex" }}>
-                <Link href="/">
-                  <Logo />
+            <Container maxWidth="lg">
+              <Toolbar>
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={handleDrawerOpen}
+                  edge="start"
+                  sx={{
+                    marginRight: "0px",
+                  }}
+                  size="large"
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Link
+                  href="/"
+                  style={{
+                    marginRight: "24px",
+                  }}
+                >
+                  <Logo />{" "}
                 </Link>
-                <Typography
-                  variant="h5"
-                  color="white"
-                  sx={{ ml: "8px", fontWeight: "900", lineHeight: "1.1" }}
-                >
-                  Pinnacle <br /> Softwares
-                </Typography>
-                <Box sx={{ flex: "1 1 auto" }} />
-                <Stack
-                  spacing={2}
-                  sx={{ display: { md: "inline-flex", xs: "none" } }}
-                  direction="row"
-                >
-                  <StyledButton
-                    startIcon={<FontAwesomeIcon icon={faHome} />}
-                    href="#home"
-                  >
-                    Home
-                  </StyledButton>
-                  <StyledButton
-                    startIcon={<FontAwesomeIcon icon={faUsersCog} />}
-                    href="#services"
-                  >
-                    Services
-                  </StyledButton>
-                  <StyledButton
-                    startIcon={<FontAwesomeIcon icon={faAddressCard} />}
-                    href="#about"
-                  >
-                    About
-                  </StyledButton>
-                  <StyledButton
-                    startIcon={<FontAwesomeIcon icon={faPlay} />}
-                    href="#getstarted"
-                  >
-                    Get Started
-                  </StyledButton>
-                  <StyledButton
-                    startIcon={<FontAwesomeIcon icon={faAddressBook} />}
-                    href="#contact"
-                  >
-                    Contact
-                  </StyledButton>
-                </Stack>
-
-                <Stack sx={{ mr: 2, display: { md: "none", xs: "block" } }}>
-                  <Box
-                    style={{
-                      borderRadius: "50%",
-                    }}
-                    onClick={handleDrawerOpen}
-                  >
-                    <MenuIcon />
-                  </Box>
-                </Stack>
+                <NavbarContent />
               </Toolbar>
             </Container>
           </ShadowStyled>
@@ -114,12 +78,11 @@ const Navbar = () => {
         onClose={handleDrawerOpen}
         open={drawerOpen}
         onOpen={handleDrawerOpen}
-        anchor="right"
+        anchor="left"
         ModalProps={{
           keepMounted: true, // Better open performance on mobile.
         }}
         sx={{
-          display: { xs: "block", md: "none" },
           "& .MuiDrawer-paper": { boxSizing: "border-box", width: 240 },
         }}
       >
@@ -135,7 +98,7 @@ const Navbar = () => {
               color="black"
               sx={{ ml: "8px", fontWeight: "900", lineHeight: "1.1" }}
             >
-              Pinnacle <br /> Softwares
+              Pizzeria <br /> Shop
             </Typography>
           </Toolbar>
           <Divider />
@@ -160,8 +123,9 @@ const Navbar = () => {
               }}
             >
               <StyledButton
+                LinkComponent={Link}
                 startIcon={<FontAwesomeIcon icon={faUsersCog} />}
-                href="#services"
+                href="/services"
               >
                 Services
               </StyledButton>
@@ -173,8 +137,9 @@ const Navbar = () => {
               }}
             >
               <StyledButton
+                LinkComponent={Link}
                 startIcon={<FontAwesomeIcon icon={faAddressCard} />}
-                href="#about"
+                href="/about"
               >
                 About
               </StyledButton>
@@ -186,8 +151,9 @@ const Navbar = () => {
               }}
             >
               <StyledButton
+                LinkComponent={Link}
                 startIcon={<FontAwesomeIcon icon={faPlay} />}
-                href="#getstarted"
+                href="/start"
               >
                 Get Started
               </StyledButton>
@@ -199,10 +165,11 @@ const Navbar = () => {
               }}
             >
               <StyledButton
-                startIcon={<FontAwesomeIcon icon={faAddressBook} />}
-                href="#contact"
+                LinkComponent={Link}
+                startIcon={<FontAwesomeIcon icon={faCartArrowDown} />}
+                href="/cart"
               >
-                Contact
+                My Cart
               </StyledButton>
             </ListItem>
           </List>
