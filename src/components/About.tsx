@@ -36,7 +36,7 @@ function About({}: Props): ReactElement {
               >
                 <CardMedia
                   sx={{ height: 300 }}
-                  image="../../../img/UnderDev.png"
+                  image="../../../img/logo.png"
                   title="reliable applications"
                 />
                 <CardContent>
@@ -72,7 +72,7 @@ function About({}: Props): ReactElement {
               >
                 <CardMedia
                   sx={{ height: 300 }}
-                  image="../../../img/Websites.png"
+                  image="../../../img/logo2.png"
                   title="more than websites"
                 />
                 <CardContent>
@@ -109,7 +109,7 @@ function About({}: Props): ReactElement {
               >
                 <CardMedia
                   sx={{ height: 300 }}
-                  image="../../../img/Solutions.png"
+                  image="../../../img/logo.png"
                   title="solution partner"
                 />
                 <CardContent>
