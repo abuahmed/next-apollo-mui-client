@@ -91,7 +91,7 @@ export default function Footer() {
           }}
         >
           <Container maxWidth="lg" color="white">
-            <Paper elevation={5} sx={{ background: "transparent" }}>
+            <Paper elevation={5} sx={{ background: "transparent", px: 3 }}>
               <Grid container direction="row" spacing={1}>
                 <Grid
                   item
