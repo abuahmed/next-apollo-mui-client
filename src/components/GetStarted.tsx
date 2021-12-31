@@ -13,7 +13,7 @@ function GetStarted({}: Props): ReactElement {
       id="getstarted"
       sx={{
         pt: "64px",
-
+        minHeight: "400px",
         background: "linear-gradient(180deg, #fff 400px, #ffa500 0%)",
       }}
     >
