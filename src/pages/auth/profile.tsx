@@ -5,6 +5,9 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import AuthSkeleton from "../../components/Layout/AuthSkeleton";
 import { Container } from "@mui/material";
+import { useRouter } from "next/router";
+import { useReactiveVar } from "@apollo/client";
+import { authUserVar } from "../../apollo/cache";
 
 // import AccountHeader from "../../components/account/AccountHeader";
 // import { AccountDetail } from "../../components/account/AccountDetail";
@@ -12,9 +15,15 @@ import { Container } from "@mui/material";
 
 export default function Profile() {
   const loading = false;
-  // useEffect(() => {
-  //   //dispatch(changePageTitle(title));
-  // }, []);
+  const router = useRouter();
+
+  const user = useReactiveVar(authUserVar);
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/auth/signIn");
+    }
+  }, [user]);
 
   return (
     <>

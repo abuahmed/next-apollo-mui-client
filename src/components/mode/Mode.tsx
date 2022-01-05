@@ -20,7 +20,7 @@ export default function Mode() {
   }, [isDarkMode]);
   return (
     <Tooltip
-      sx={{ ml: 1 }}
+      sx={{ p: 0 }}
       title={`${
         theme.palette.mode === "dark" ? "To light mode" : "To dark mode"
       }`}

@@ -1,28 +1,18 @@
+import React from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import React, { ReactElement } from "react";
 
-interface Props {}
-
-function GetStarted({}: Props): ReactElement {
+export default function Custom404() {
   return (
-    <Box
-      id="getstarted"
-      sx={{
-        pt: "64px",
-        minHeight: "400px",
-        background: "linear-gradient(180deg, #fff 400px, #ffa500 0%)",
-      }}
-    >
+    <Box id="about" sx={{ pt: "64px" }}>
       <Container maxWidth="lg">
-        <Stack alignItems="center">
-          <Typography data-aos="fade-up" variant="h2" color="black" noWrap>
-            Get Started
+        <Stack alignItems="center" sx={{ padding: "24px" }}>
+          <Typography data-aos="fade-up" variant="h2" color="orange" noWrap>
+            404
           </Typography>
-
           <Divider
             data-aos="zoom-in"
             orientation="horizontal"
@@ -33,10 +23,11 @@ function GetStarted({}: Props): ReactElement {
               marginBottom: "10px",
             }}
           ></Divider>
+          <Typography data-aos="fade-up" variant="h6" noWrap>
+            The page you are requesting is not found!
+          </Typography>
         </Stack>
       </Container>
     </Box>
   );
 }
-
-export default GetStarted;

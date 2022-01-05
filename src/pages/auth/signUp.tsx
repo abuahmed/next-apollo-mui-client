@@ -14,7 +14,6 @@ import CardContent from "@mui/material/CardContent";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import InputAdornment from "@mui/material/InputAdornment";
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import LockRounded from "@mui/icons-material/LockRounded";
 
 import { FormikTextField } from "../../components/Layout/FormikTextField";
@@ -28,7 +27,7 @@ import Divider from "@mui/material/Divider";
 import { AuthenticationWrapper } from "../../styles/layoutStyled";
 import { ApolloError, useMutation, useReactiveVar } from "@apollo/client";
 import { SIGN_UP } from "../../apollo/operations/mutations/user";
-import { isUserLoggedInVar } from "../../apollo/cache";
+import { authUserVar } from "../../apollo/cache";
 
 interface Values {
   name: string;
@@ -46,13 +45,13 @@ export default function SignUp() {
       setError(err);
     },
   });
-  const isUserLoggedIn = useReactiveVar(isUserLoggedInVar);
+  const user = useReactiveVar(authUserVar);
 
   useEffect(() => {
-    if (isUserLoggedIn) {
+    if (user) {
       router.push("/cart");
     }
-  }, [isUserLoggedIn]);
+  }, [user]);
   // errorPolicy: "all",
   //     onCompleted: (data) => {
   //       if (data) {
@@ -64,11 +63,6 @@ export default function SignUp() {
       router.push(`/auth/signIn`);
     }
   }, [data]);
-  // useEffect(() => {
-  //   if (error) {
-  //     console.log(error);
-  //   }
-  // }, [error]);
 
   return (
     <>

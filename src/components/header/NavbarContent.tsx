@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useRouter } from "next/router";
 
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -9,6 +8,8 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import Search from "../search/Search";
 import { Avatar, Badge, Box, Tooltip } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Mode from "../mode/Mode";
 import {
   AppRegistration,
@@ -23,8 +24,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { useReactiveVar } from "@apollo/client";
 
-import { authUserVar, isUserLoggedInVar } from "../../apollo/cache";
-import { AuthUser } from "../../apollo/models/user";
+import { authUserVar } from "../../apollo/cache";
 
 function NavbarContent() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -32,23 +32,14 @@ function NavbarContent() {
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  //const router = useRouter();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const isUserLoggedIn = useReactiveVar(isUserLoggedInVar);
   const user = useReactiveVar(authUserVar);
-  //const [user, setUser] = React.useState<AuthUser>();
-  React.useEffect(() => {
-    if (isUserLoggedIn) {
-      //setUser(JSON.parse(localStorage.getItem("userInfo") as string));
-    } else {
-      //setUser(undefined);
-      authUserVar();
-    }
-  }, [isUserLoggedIn]);
+
   const logoutHandler = () => {
-    isUserLoggedInVar(false);
     localStorage.removeItem("userInfo");
-    //router.push("/");
+    authUserVar(undefined);
     handleMenuClose();
   };
   const handleMenuClose = () => {
@@ -122,6 +113,30 @@ function NavbarContent() {
           </Link>
         </MenuItem>,
       ]}
+      {user &&
+        isMobile && [
+          <MenuItem>
+            <Typography
+              sx={{ color: "#000", display: "flex", alignItems: "center" }}
+            >
+              <Mail /> Mails
+            </Typography>
+          </MenuItem>,
+          <MenuItem>
+            <Typography
+              sx={{ color: "#000", display: "flex", alignItems: "center" }}
+            >
+              <Notifications /> Notifications
+            </Typography>
+          </MenuItem>,
+          <MenuItem>
+            <Typography
+              sx={{ color: "#000", display: "flex", alignItems: "center" }}
+            >
+              <Mode /> Light/Dark Mode
+            </Typography>
+          </MenuItem>,
+        ]}
       {user && [
         <MenuItem key="13" onClick={handleMenuClose} disableRipple>
           <Link
@@ -149,7 +164,11 @@ function NavbarContent() {
 
   return (
     <>
-      <Typography sx={{ fontWeight: 500 }} variant="h4" noWrap>
+      <Typography
+        sx={{ fontWeight: 500, display: { xs: "none", sm: "block" } }}
+        variant="h4"
+        noWrap
+      >
         Pizzeria Shop
         {/* {pageTitle} */}
       </Typography>
@@ -160,6 +179,13 @@ function NavbarContent() {
       </Toolbar>
       <Box style={{ display: "flex" }}>
         {user && (
+          <IconButton LinkComponent={Link} href="/cart" color="inherit">
+            <Badge badgeContent={3} color="primary">
+              <FontAwesomeIcon icon={faCartArrowDown} />
+            </Badge>
+          </IconButton>
+        )}
+        {user && !isMobile && (
           <>
             <IconButton color="inherit" style={{ marginLeft: 0 }}>
               <Badge badgeContent={4} color="primary">
@@ -171,14 +197,9 @@ function NavbarContent() {
                 <Notifications />
               </Badge>
             </IconButton>
-            <IconButton LinkComponent={Link} href="/cart" color="inherit">
-              <Badge badgeContent={3} color="primary">
-                <FontAwesomeIcon icon={faCartArrowDown} />
-              </Badge>
-            </IconButton>
+            <Mode />
           </>
         )}
-        <Mode />
         <Tooltip title="Account settings">
           <IconButton
             edge="end"

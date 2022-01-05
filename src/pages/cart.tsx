@@ -6,16 +6,16 @@ import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { isUserLoggedInVar } from "../apollo/cache";
+import { authUserVar } from "../apollo/cache";
 export default function Cart() {
-  const isUserLoggedIn = useReactiveVar(isUserLoggedInVar);
+  const user = useReactiveVar(authUserVar);
   const router = useRouter();
 
   useEffect(() => {
-    if (!isUserLoggedIn) {
+    if (!user) {
       router.push("/auth/signIn");
     }
-  }, [isUserLoggedIn]);
+  }, [user]);
   return (
     <Box id="about" sx={{ pt: "64px" }}>
       <Container maxWidth="lg">

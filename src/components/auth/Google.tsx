@@ -4,15 +4,21 @@ import { useRouter } from "next/router";
 import GoogleLogin from "react-google-login";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { useMutation } from "@apollo/client";
+import { ApolloError, useMutation } from "@apollo/client";
 
 import { SIGN_IN_GOOGLE } from "../../apollo/operations/mutations/user";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import Toast from "../Layout/Toast";
 const Google = () => {
   const router = useRouter();
+  const [error, setError] = React.useState<ApolloError>();
 
-  const [mutate, { loading, error, data }] = useMutation(SIGN_IN_GOOGLE);
+  const [mutate, { loading, data }] = useMutation(SIGN_IN_GOOGLE, {
+    onError: (err) => {
+      setError(err);
+    },
+  });
 
   useEffect(() => {
     if (data) {
@@ -21,6 +27,7 @@ const Google = () => {
     }
   }, [data]);
   const responseGoogle = (response: any) => {
+    console.log(response.tokenId);
     mutate({ variables: { idToken: response.tokenId } });
   };
   const failResponseGoogle = (response: any) => {
@@ -28,6 +35,7 @@ const Google = () => {
   };
   return (
     <Box pb={2}>
+      {error && <Toast severity="error">{error.message}</Toast>}
       <GoogleLogin
         clientId="287014686210-l0hlb5hjd8dg45o9cjpebalgn80dmde2.apps.googleusercontent.com"
         onSuccess={responseGoogle}

@@ -28,7 +28,7 @@ import { AuthenticationWrapper } from "../../styles/layoutStyled";
 import { ApolloError, useMutation, useReactiveVar } from "@apollo/client";
 import { SIGN_IN } from "../../apollo/operations/mutations/user";
 import { useEffect } from "react";
-import { authUserVar, isUserLoggedInVar } from "../../apollo/cache";
+import { authUserVar } from "../../apollo/cache";
 import React from "react";
 import { AuthUser } from "../../apollo/models/user";
 
@@ -48,20 +48,17 @@ const SignIn = () => {
     },
   });
   const user = useReactiveVar(authUserVar);
-  const isUserLoggedIn = useReactiveVar(isUserLoggedInVar);
 
   useEffect(() => {
-    if (isUserLoggedIn) {
-      //authUserVar(data.authUser as AuthUser);
+    if (user) {
       router.push("/cart");
     }
-  }, [isUserLoggedIn]);
+  }, [user]);
 
   useEffect(() => {
     if (data) {
       localStorage.setItem("userInfo", JSON.stringify(data.authUser));
-      isUserLoggedInVar(true);
-      //router.push(`/cart`);
+      authUserVar(data.authUser as AuthUser);
     }
   }, [data]);
 
